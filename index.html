@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA DO GUINHO - Plano de Investimento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --panel-color: #161b22;
+            --border-color: #30363d;
+            --text-color: #c9d1d9;
+            --text-color-bright: #ffffff;
+            --neon-green: #00ff41;
+            --neon-yellow: #ffeb3b;
+            --neon-orange: #ff6d00;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --shadow-neon-green: rgba(0, 255, 65, 0.5);
+            --shadow-neon-yellow: rgba(255, 235, 59, 0.3);
+            --gradient-panel: linear-gradient(145deg, #161b22, #0d1117);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Estilos do Cabeçalho */
+        .header {
+            background: var(--panel-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-left .icon {
+            color: var(--neon-green);
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--shadow-neon-green));
+        }
+
+        .header-left h1 {
+            color: var(--neon-green);
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            filter: drop-shadow(0 0 5px var(--shadow-neon-green));
+        }
+
+        .header-left h1 span {
+            color: var(--text-color);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: none;
+            margin-left: 5px;
+        }
+
+        .header-right {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        }
+
+        .header-right p {
+            color: var(--text-color);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .header-right h2 {
+            color: var(--neon-green);
+            font-size: 1.5rem;
+            font-weight: 800;
+            filter: drop-shadow(0 0 5px var(--shadow-neon-green));
+        }
+
+        .header-right i {
+            color: var(--neon-green);
+            font-size: 1.5rem;
+        }
+
+        /* Estilos da Barra de Navegação */
+        .nav-bar {
+            background: var(--panel-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: space-around;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .nav-item.active {
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            filter: drop-shadow(0 0 5px var(--shadow-neon-green));
+        }
+
+        .nav-item:not(.active):hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color-bright);
+        }
+
+        .nav-item i {
+            font-size: 1rem;
+        }
+
+        /* Estilos do Banner */
+        .banner {
+            background: rgba(255, 235, 59, 0.1);
+            border: 1px solid var(--neon-yellow);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px var(--shadow-color), 0 0 20px rgba(255, 235, 59, 0.05);
+        }
+
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .banner-left i {
+            color: var(--neon-yellow);
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px var(--shadow-neon-yellow));
+        }
+
+        .banner-left p {
+            color: var(--neon-yellow);
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            filter: drop-shadow(0 0 5px var(--shadow-neon-yellow));
+            line-height: 1.3;
+        }
+
+        .btn-register {
+            background: rgba(0, 255, 65, 0.1);
+            border: 2px solid var(--neon-green);
+            border-radius: 8px;
+            color: var(--neon-green);
+            padding: 12px 20px;
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            text-decoration: none;
+            filter: drop-shadow(0 0 10px var(--shadow-neon-green));
+        }
+
+        .btn-register:hover {
+            background: var(--neon-green);
+            color: #000;
+            filter: drop-shadow(0 0 15px var(--neon-green));
+        }
+
+        /* Estilos do Input da Banca */
+        .banca-section {
+            background: var(--panel-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .banca-input-group {
+            text-align: center;
+            width: 60%;
+        }
+
+        .banca-input-group h3 {
+            color: var(--neon-green);
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .banca-input-group p {
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .input-wrapper {
+            background: var(--bg-color);
+            border: 1px solid var(--neon-yellow);
+            border-radius: 8px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 0 15px rgba(255, 235, 59, 0.1);
+        }
+
+        .input-wrapper label {
+            color: var(--text-color);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .input-wrapper input {
+            background: transparent;
+            border: none;
+            color: var(--neon-green);
+            font-size: 3.5rem;
+            font-weight: 800;
+            width: 100%;
+            text-align: right;
+            outline: none;
+            filter: drop-shadow(0 0 10px var(--shadow-neon-green));
+        }
+
+        /* Estilos do Painel de Cotação */
+        .cotacao-panel {
+            width: 35%;
+            background: rgba(255, 235, 59, 0.05);
+            border: 1px solid rgba(255, 235, 59, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .cotacao-panel h4 {
+            color: var(--text-color);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .cotacao-panel h2 {
+            color: var(--neon-yellow);
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 0 10px var(--shadow-neon-yellow));
+        }
+
+        .cotacao-panel p.banca-name {
+            color: var(--neon-green);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .cotacao-panel p.update-time {
+            color: var(--text-color);
+            font-size: 0.8rem;
+        }
+
+        /* Estilos da Tabela */
+        .table-section {
+            background: var(--panel-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .table-section h3 {
+            color: var(--neon-green);
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.1rem;
+        }
+
+        thead th {
+            color: var(--text-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            text-align: left;
+            padding: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tbody td {
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        /* Cores Específicas das Colunas */
+        tbody td span.horario-text {
+            color: var(--text-color);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        tbody td span.horario-text i {
+            font-size: 0.9rem;
+        }
+
+        tbody td.aposta-val, tbody td.gasto-val {
+            color: var(--neon-yellow);
+        }
+
+        tbody td.premio-val, tbody td.lucro-val {
+            color: var(--neon-green);
+        }
+
+        /* Estilos da Seção de Resumo */
+        .summary-section {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .summary-panel {
+            width: 48%;
+            background: var(--gradient-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .summary-panel.custo {
+            border: 1px solid var(--neon-yellow);
+            box-shadow: 0 0 15px rgba(255, 235, 59, 0.1);
+        }
+        .summary-panel.lucro {
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        }
+
+        .summary-panel .summary-icon {
+            font-size: 2rem;
+        }
+        .summary-panel.custo .summary-icon { color: var(--neon-yellow); filter: drop-shadow(0 0 10px var(--shadow-neon-yellow)); }
+        .summary-panel.lucro .summary-icon { color: var(--neon-green); filter: drop-shadow(0 0 10px var(--shadow-neon-green)); }
+
+        .summary-panel .summary-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summary-panel p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .summary-panel h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+        .summary-panel.custo h3 { color: var(--neon-yellow); filter: drop-shadow(0 0 10px var(--shadow-neon-yellow)); }
+        .summary-panel.lucro h3 { color: var(--neon-green); filter: drop-shadow(0 0 10px var(--shadow-neon-green)); }
+
+        /* Estilos do Painel de Dica */
+        .tip-panel {
+            background: rgba(255, 109, 0, 0.1);
+            border: 1px solid var(--neon-orange);
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 6px var(--shadow-color), 0 0 20px rgba(255, 109, 0, 0.05);
+        }
+
+        .tip-panel .tip-icon {
+            color: var(--neon-orange);
+            font-size: 3rem;
+            filter: drop-shadow(0 0 15px rgba(255, 109, 0, 0.5));
+        }
+
+        .tip-panel p {
+            color: var(--text-color-bright);
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .tip-panel span.highlight {
+            color: var(--neon-orange);
+            font-weight: 800;
+            filter: drop-shadow(0 0 5px rgba(255, 109, 0, 0.5));
+        }
+
+        /* Estilos do Rodapé */
+        .footer {
+            background: var(--panel-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+        }
+
+        .footer-item i {
+            font-size: 1rem;
+        }
+        .footer-item.check i { color: var(--neon-green); }
+        .footer-item.age i { color: var(--neon-orange); }
+
+        .footer-item .footer-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-item strong {
+            color: var(--text-color-bright);
+            font-weight: 700;
+        }
+
+        .footer-item i.age-limit-icon {
+            border: 1px solid var(--neon-orange);
+            border-radius: 50%;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <header class="header">
+        <div class="header-left">
+            <i class="fas fa-sack-dollar icon"></i>
+            <h1>SISTEMA DO GUINHO<span>GRUPO (1º AO 5º)</span></h1>
+        </div>
+        <div class="header-right">
+            <i class="fas fa-wallet"></i>
+            <div class="header-info">
+                <p>SALDO DISPONÍVEL</p>
+                <h2 id="saldoDisplay">R$ 50,00</h2>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-bar">
+        <div class="nav-item active"><i class="fas fa-home"></i> INÍCIO</div>
+        <div class="nav-item"><i class="fas fa-building-columns"></i> BANCA TRADIÇÃO</div>
+        <div class="nav-item"><i class="fas fa-calculator"></i> SIMULADOR</div>
+        <div class="nav-item"><i class="fas fa-clock-rotate-left"></i> HISTÓRICO</div>
+        <div class="nav-item"><i class="fas fa-gear"></i> CONFIGURAÇÕES</div>
+        <div class="nav-item"><i class="fas fa-circle-info"></i> SOBRE</div>
+    </nav>
+
+    <div class="banner">
+        <div class="banner-left">
+            <i class="fas fa-triangle-exclamation"></i>
+            <p>ESTE SISTEMA FOI CALCULADO PARA A<br>COTAÇÃO DE R$ 4,60 DA BANCA TRADIÇÃO</p>
+        </div>
+        <a href="#" class="btn-register">CADASTRE-SE<br>NA BANCA TRADIÇÃO</a>
+    </div>
+
+    <div class="banca-section">
+        <div class="banca-input-group">
+            <h3>GESTÃO DE BANCA</h3>
+            <p>Digite o valor total que você tem para investir hoje:</p>
+            <div class="input-wrapper">
+                <label>R$</label>
+                <input type="number" id="bancaInput" value="50.00" step="1.00">
+            </div>
+        </div>
+        <div class="cotacao-panel">
+            <h4><i class="fas fa-chart-line"></i> COTAÇÃO ATUAL</h4>
+            <h2>R$ 4,60</h2>
+            <p class="banca-name">BANCA TRADIÇÃO</p>
+            <p class="update-time">Última atualização:<br>26/05/2026 16:30</p>
+        </div>
+    </div>
+
+    <div class="table-section">
+        <h3><i class="fas fa-chart-area"></i> PLANO DE INVESTIMENTO</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>HORÁRIO</th>
+                    <th>VALOR DA APOSTA</th>
+                    <th>PRÊMIO SE SAIR (4.6x)</th>
+                    <th>GASTO ACUMULADO</strong></th>
+                    <th>LUCRO LÍQUIDO REAL</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaBody">
+                </tbody>
+        </table>
+    </div>
+
+    <div class="summary-section">
+        <div class="summary-panel custo">
+            <i class="fas fa-calculator summary-icon"></i>
+            <div class="summary-info">
+                <p>CUSTO TOTAL</p>
+                <h3 id="custoTotalDisplay">R$ 50,00</h3>
+            </div>
+        </div>
+        <div class="summary-panel lucro">
+            <i class="fas fa-coins summary-icon"></i>
+            <div class="summary-info">
+                <p>LUCRO TOTAL <span style="text-transform:none; font-weight:400;">(SE SAIR NO 6º HORÁRIO)</span></p>
+                <h3 id="lucroTotalDisplay">R$ 91,43</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="tip-panel">
+        <i class="fas fa-bullseye tip-icon"></i>
+        <p>ESCOLHA O BICHO QUE SAI MUITO NA SUA BANCA. <br> <span class="highlight">ATÉ O SEXTO HORÁRIO SE SAIR VOCÊ SE DARÁ BEM!!</span></p>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-item check">
+            <i class="fas fa-check-circle"></i>
+            <div class="footer-info">
+                <strong>SISTEMA DO GUINHO</strong>
+                Grupo (1º ao 5º)
+            </div>
+        </div>
+        <div class="footer-item age">
+            <i class="fas fa-18 age-limit-icon"></i>
+            <div class="footer-info">
+                <strong>JOGUE COM RESPONSABILIDADE</strong>
+                Apenas para maiores de 18 anos
+            </div>
+        </div>
+        <div class="footer-item">
+            <i class="fas fa-code"></i>
+            <div class="footer-info">
+                <strong>VERSÃO 1.0</strong>
+                Desenvolvido com <i class="fas fa-heart" style="color:var(--neon-green);"></i>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<script>
+    const bancaInput = document.getElementById('bancaInput');
+    const saldoDisplay = document.getElementById('saldoDisplay');
+    const tabelaBody = document.getElementById('tabelaBody');
+    const custoTotalDisplay = document.getElementById('custoTotalDisplay');
+    const lucroTotalDisplay = document.getElementById('lucroTotalDisplay');
+
+    function formatarMoeda(valor) {
+        return 'R$ ' + valor.toFixed(2).replace('.', ',');
+    }
+
+    function calcularPlano() {
+        const banca = parseFloat(bancaInput.value) || 0;
+        const cotacao = 4.60;
+        let custoTotalApostasAcumulado = 0;
+        tabelaBody.innerHTML = ''; // Limpa a tabela
+
+        // Define a aposta base (Aposta 1) de forma dinâmica
+        // A soma dos multiplicadores para 6 horários (1+2+4+8+16+32) é 63
+        let baseApostaVal = (banca / 63).toFixed(2);
+        let baseAposta = Number(baseApostaVal);
+
+        // Se a banca for muito pequena, define um mínimo de 0.01 para não zerar
+        if (baseAposta <= 0 && banca > 0) {
+            baseAposta = 0.01;
+        }
+
+        for (let i = 0; i < 6; i++) {
+            // Lógica de dobramento puro a partir da aposta base arredondada
+            let apostaRodada = Number((baseAposta * Math.pow(2, i)).toFixed(2));
+            
+            // Se a aposta calculada exceder a banca restante, ajusta para o valor restante
+            // ou impede de apostar mais do que a banca total.
+            // Para manter o dobramento puro, não limitaremos aqui, apenas calcularemos o gasto.
+
+            let premioRodada = Number((apostaRodada * cotacao).toFixed(2));
+            
+            // Calcula o custo total gasto ATÉ este horário
+            custoTotalApostasAcumulado = Number((custoTotalApostasAcumulado + apostaRodada).toFixed(2));
+            
+            // Calcula o Lucro Líquido REAL desta rodada (Prêmio - Gasto total acumulado até agora)
+            let lucroRealRodada = Number((premioRodada - custoTotalApostasAcumulado).toFixed(2));
+
+            // Cria a linha da tabela
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><span class="horario-text"><i class="fas fa-clock"></i> ${i + 1}º HORÁRIO</span></td>
+                <td class="aposta-val">${formatarMoeda(apostaRodada)}</td>
+                <td class="premio-val">${formatarMoeda(premioRodada)}</td>
+                <td class="gasto-val">${formatarMoeda(custoTotalApostasAcumulado)}</td>
+                <td class="lucro-val">${formatarMoeda(lucroRealRodada)}</td>
+            `;
+            tabelaBody.appendChild(tr);
+        }
+
+        // Atualiza os displays de resumo
+        saldoDisplay.innerText = formatarMoeda(banca);
+        custoTotalDisplay.innerText = formatarMoeda(custoTotalApostasAcumulado);
+        
+        // O lucro total final se sair no 6º horário é o lucro da 6ª rodada
+        // Vamos buscar o valor do lucro da última linha da tabela
+        const ultLucroText = tabelaBody.lastElementChild.querySelector('.lucro-val').innerText;
+        lucroTotalDisplay.innerText = ultLucroText;
+    }
+
+    // Event listener para recálculo dinâmico
+    bancaInput.addEventListener('input', calcularPlano);
+
+    // Cálculo inicial
+    calcularPlano();
+</script>
+
+</body>
+</html>
